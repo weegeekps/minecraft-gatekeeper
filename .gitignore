@@ -52,3 +52,13 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# IDEA
+.idea/
+
+# Secure Settings
+secure_settings.py
+
+# Bower & Node
+bower_components/
+node_modules/

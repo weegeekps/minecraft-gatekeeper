@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="small-12 columns">
+            <h1>720 Miners</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 columns">
+            <p><i>Entertainment 720 is Pawnee's first and only entertainment media conglomerate. Helmed by nightclub
+                impresarios and marketing masterminds Tom Haverford and Jean-Ralphio Saperstein, Entertainment 720 is
+                your one-stop-shop for public relations, marketing, or anything having to do with reaching out to
+                people, communicating effectively, and other desirable abilities.</i></p>
+
+            <p>720 Miners is a workers union of Entertainment 720 employees comprised of Dwarfs, Elves, Hobbits, but
+                mostly Trolls.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-4 small-centered columns">
+            <a href="{% url 'social:begin' 'google-oauth2' %}" class="button signin-button"><i class="fa fa-lg fa-google"></i>
+                Sign-In with Google</a>
+        </div>
+    </div>
+{% endblock %}

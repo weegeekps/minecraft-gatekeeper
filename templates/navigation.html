@@ -1,0 +1,29 @@
+{% if user.is_authenticated %}
+    <nav class="top-bar" data-topbar role="navigation">
+        <ul class="title-area">
+            <li class="name">
+                <h1><a href="#">720 Miners</a></h1>
+            </li>
+            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+        </ul>
+        <section class="top-bar-section">
+            <ul class="right">
+                <li class="{% if active_tab == 'profile' %}active{% endif %}">
+                    <a href="{% url 'profile' %}">Profile</a>
+                </li>
+                <li class="{% if active_tab == 'resources' %}active{% endif %}">
+                    <a href="{% url 'resources' %}">Resources</a>
+                </li>
+                <li>
+                    <a href="http://reddit.com/r/720miners">Subreddit</a>
+                </li>
+                <li>
+                    <a href="http://minecraft.anmorris.org/map">Server Map</a>
+                </li>
+                <li class="has-form">
+                    <a class="button" href="{% url 'logout' %}">Sign Out</a>
+                </li>
+            </ul>
+        </section>
+    </nav>
+{% endif %}

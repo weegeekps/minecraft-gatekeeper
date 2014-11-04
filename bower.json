@@ -1,0 +1,21 @@
+{
+  "name": "PersonalSite",
+  "version": "0.1.0",
+  "authors": [
+    "Adam Morris"
+  ],
+  "license": "apache",
+  "homepage": "http://minecraft.anmorris.org",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation": "~5.4.7",
+    "font-awesome": "~4.2.0"
+  }
+}
