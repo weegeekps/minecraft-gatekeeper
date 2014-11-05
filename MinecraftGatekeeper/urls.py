@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from django.views.generic import TemplateView
-from django.contrib.auth.decorators import login_required
-from MinecraftGatekeeper.RootSite.views import ProfileView
+from django.views.generic import TemplateView, FormView
+from django.contrib.auth.decorators import login_required, permission_required
+from MinecraftGatekeeper.RootSite.views import ProfileView, ManageListView
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'MinecraftGatekeeper.RootSite.views.logout', name='logout'),
 
     url(r'^resources/$', login_required(TemplateView.as_view(template_name="resources.html")), name='resources'),
+
+    url(r'^manage/$', permission_required('manage.users')(ManageListView.as_view)),
 
     url(r'^$', login_required(ProfileView.as_view()), name='profile'),
 )

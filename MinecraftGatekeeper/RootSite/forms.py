@@ -1,18 +1,18 @@
 from django import forms
+from django.contrib import auth
 from django.contrib.auth.forms import UserChangeForm as OldUserChangeForm
-from MinecraftGatekeeper.RootSite.models import User
 
 
 class UserChangeForm(OldUserChangeForm):
     class Meta(OldUserChangeForm.Meta):
-        model = User
+        model = auth.get_user_model()
 
 
-class ProfileForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['email', 'first_name', 'last_name', 'minecraft_username', 'referred_by', 'reddit_username']
+class ProfileForm(forms.Form):
+    email = forms.EmailField(required=True, max_length=75)
+    first_name = forms.CharField(max_length=30)
+    last_name = forms.CharField(max_length=30)
+    minecraft_username = forms.CharField(max_length=120)
+    referred_by = forms.CharField(max_length=120, required=False)
+    reddit_username = forms.CharField(max_length=120, required=False)
 
-    def update_profile(self):
-        # This is where we will update the profile.
-        pass

@@ -10,10 +10,11 @@
 
             <p>Hello {{ user.get_full_name|default:user.username }}!</p>
 
-            <div class="panel">
-                <h3>Please note the following alerts</h3>
+            <h3>Profile Alerts</h3>
+            {% if not user.granted_access or user.suspended_until != None or user.can_invite_new_users or user.reddit_username == '' %}
                 {% if not user.granted_access %}
-                    <div class="alert-box alert">You are not currently set up for access and will not be able to connect
+                    <div class="alert-box alert">You are not currently set up for access and will not be able to
+                        connect
                         to the server. Please be patient while you are set up.
                     </div>
                 {% endif %}
@@ -24,61 +25,93 @@
                 {% endif %}
 
                 {% if user.can_invite_new_users %}
-                    <div class="alert-box success">You can <a href="#">invite</a> new users.</div>
+                    <div class="alert-box info">You can <a href="#">invite</a> new users.</div>
                 {% endif %}
 
                 {% if user.reddit_username == '' %}
-                    <div class="alert-box info">Please enter your Reddit username to gain access to the official <a href="http://reddit.com/r/720miners">subreddit</a>.</div>
+                    <div class="alert-box info">Please enter your Reddit username to gain access to the official
+                        <a href="http://reddit.com/r/720miners">subreddit</a>.
+                    </div>
                 {% endif %}
-            </div>
+            {% else %}
+                <div class="alert-box secondary">You have no alerts.</div>
+            {% endif %}
 
             <h3>Change your profile</h3>
 
-            <form action="/profile/" method="post">
+            {% if messages %}
+                {% for message in messages %}
+                    <div data-alert class="alert-box success">
+                        {{ message }}
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form action="/" method="post">
                 {% csrf_token %}
                 <div class="row">
                     <div class="small-12 medium-6 columns">
-                        <label>First Name
-                            <input type="text" name="{{ form.first_name.html_name }}" value="{{ user.first_name }}">
+                        <label class="{% if form.first_name.errors %}error{% endif %}">First Name
+                            <input type="text" name="{{ form.first_name.html_name }}" value="{{ form.first_name.value }}">
                         </label>
+                        {% for error in form.first_name.errors %}
+                            <small class="error">{{ error }}</small>
+                        {% endfor %}
                     </div>
                     <div class="small-12 medium-6 columns">
-                        <label>Last Name
-                            <input type="text" name="{{ form.last_name.html_name }}" value="{{ user.last_name }}">
+                        <label class="{% if form.last_name.errors %}error{% endif %}">Last Name
+                            <input type="text" name="{{ form.last_name.html_name }}" value="{{ form.last_name.value }}">
                         </label>
+                        {% for error in form.last_name.errors %}
+                            <small class="error">{{ error }}</small>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-12 columns">
-                        <label>Email Address
-                            <input type="email" name="{{ form.email.html_name }}" value="{{ user.email }}">
+                        <label class="{% if form.email.errors %}error{% endif %}">Email Address
+                            <input type="email" name="{{ form.email.html_name }}" value="{{ form.email.value }}">
                         </label>
+                        {% for error in form.email.errors %}
+                            <small class="error">{{ error }}</small>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-12 columns">
-                        <label>Minecraft Username
-                            <input type="text" name="{{ form.minecraft_username.html_name }}" value="{{ user.minecraft_username }}">
+                        <label class="{% if form.minecraft_username.errors %}error{% endif %}">Minecraft Username
+                            <input type="text" name="{{ form.minecraft_username.html_name }}" value="{{ form.minecraft_username.value }}">
                         </label>
+                        {% for error in form.minecraft_username.errors %}
+                            <small class="error">{{ error }}</small>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-12 columns">
-                        <label>Referred by (Minecraft Username)
-                            <input type="text" name="{{ form.referred_by.html_name }}" value="{{ user.referred_by }}">
+                        <label class="{% if form.referred_by.errors %}error{% endif %}">Referred by (Minecraft Username)
+                            <input type="text" name="{{ form.referred_by.html_name }}" value="{{ form.referred_by.value }}">
                         </label>
+                        {% for error in form.referred_by.errors %}
+                            <small class="error">{{ error }}</small>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-12 columns">
-                        <label>Reddit Username
-                            <input type="text" name="{{ form.reddit_username.html_name }}" value="{{ user.reddit_username }}">
+                        <label class="{% if form.reddit_username.errors %}error{% endif %}">Reddit Username
+                            <input type="text" name="{{ form.reddit_username.html_name }}" value="{{ form.reddit_username.value }}">
                         </label>
+                        {% for error in form.reddit_username.errors %}
+                            <small class="error">{{ error }}</small>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-12 columns">
                         <button class="button" type="submit">Save Changes</button>
+                        <a class="button" href="#">Revert Changes</a>
                     </div>
                 </div>
             </form>
