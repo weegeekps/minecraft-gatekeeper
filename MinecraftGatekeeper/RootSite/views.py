@@ -1,7 +1,7 @@
 from django.contrib import auth, messages
 from django.shortcuts import redirect
 from django.contrib.auth import logout as auth_logout
-from django.views.generic import FormView, ListView
+from django.views.generic import FormView, ListView, DetailView, UpdateView
 from MinecraftGatekeeper.RootSite.forms import ProfileForm, UserChangeForm
 
 
@@ -43,3 +43,9 @@ class ProfileView(FormView):
 class ManageListView(ListView):
     template_name = 'manage/list.html'
     model = auth.get_user_model()
+
+
+class ManageDetailView(UpdateView):
+    template_name = 'manage/detail.html'
+    model = auth.get_user_model()
+    slug_field = 'username'

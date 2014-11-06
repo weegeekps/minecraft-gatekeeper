@@ -16,6 +16,8 @@
   ],
   "dependencies": {
     "foundation": "~5.4.7",
-    "font-awesome": "~4.2.0"
+    "font-awesome": "~4.2.0",
+    "datatables": "~1.10.3",
+    "datatables-plugins": "*"
   }
 }

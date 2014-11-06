@@ -5,3 +5,7 @@
 .whitespace {
     height: 6em;
 }
+
+tr:hover {
+    cursor: pointer;
+}

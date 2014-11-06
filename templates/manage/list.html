@@ -1,5 +1,74 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
-    <h1>OHHH YEAH!</h1>
+    {% include "navigation.html" with active_tab='manage' %}
+    <div class="row">
+        <div class="small-12 columns">
+            <h1>Manage Server Access</h1>
+            <table id="userList" class="display" style="width: 100%">
+                <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Minecraft Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Granted Access?</th>
+                    <th>Can Invite?</th>
+                    <th>Suspended?</th>
+                </tr>
+                </thead>
+                <tbody id="userListBody">
+                {% for user in object_list %}
+                    <tr data-href="{% url 'manage-detail' user.username %}">
+                        <td>{{ user.username }}</td>
+                        <td>
+                            {% if user.is_operator %}
+                                <i class="fa fa-shield"></i>
+                            {% endif %}
+                            {{ user.minecraft_username }}
+                        </td>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                        <td>
+                            {% if user.granted_access %}
+                                <i class="fa fa-check"></i> Yes
+                            {% else %}
+                                No
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if user.can_invite %}
+                                <i class="fa fa-check"></i> Yes
+                            {% else %}
+                                No
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if user.suspended_until != None %}
+                                {{ user.suspended_until }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_javascript %}
+<script type="application/javascript">
+$(document).ready(function() {
+    $('#userList').dataTable({
+        paging: false,
+        searching: false
+    });
+
+    $('#userListBody').on('click', 'tr', function () {
+        window.location.href = $(this).attr('data-href');
+    })
+});
+</script>
 {% endblock %}

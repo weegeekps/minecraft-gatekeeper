@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% include "navigation.html" with active_tab='manage' %}
+    <div class="row">
+        <div class="small-12.columns">
+            <h1>Detail for {{ user.username }} ({{ user.minecraft_username }})</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 columns">
+            <form action="/" method="post">
+                {% csrf_token %}
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

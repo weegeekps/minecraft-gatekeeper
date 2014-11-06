@@ -14,6 +14,11 @@
                 <li class="{% if active_tab == 'resources' %}active{% endif %}">
                     <a href="{% url 'resources' %}">Resources</a>
                 </li>
+                {% if perms.RootSite.change_user %}
+                <li class="{% if active_tab == 'manage' %}active{% endif %}">
+                    <a href="{% url 'manage-list' %}">Manage</a>
+                </li>
+                {% endif %}
                 <li>
                     <a href="http://reddit.com/r/720miners">Subreddit</a>
                 </li>

@@ -14,10 +14,12 @@ module.exports = function (grunt) {
 				files: {
 					'fastclick.js': 'foundation/js/vendor/fastclick.js',
 					'jquery.cookie.js': 'foundation/js/vendor/jquery.cookie.js',
-					'jquery.js': 'foundation/js/vendor/jquery.js',
+					'jquery.min.js': 'foundation/js/vendor/jquery.js',
 					'modernizr.js': 'foundation/js/vendor/modernizr.js',
 					'placeholder.js': 'foundation/js/vendor/placeholder.js',
-					'foundation.min.js': 'foundation/js/foundation.min.js'
+					'foundation.min.js': 'foundation/js/foundation.min.js',
+					'jquery.dataTables.min.js': 'datatables/media/js/jquery.dataTables.min.js',
+					'dataTables.foundation.min.js': 'datatables-plugins/integration/foundation/dataTables.foundation.min.js'
 				}
 			},
 
@@ -28,7 +30,10 @@ module.exports = function (grunt) {
 				files: {
 					'foundation.css': 'foundation/css/foundation.css',
 					'normalize.css': 'foundation/css/normalize.css',
-					'font-awesome.min.css': 'font-awesome/css/font-awesome.min.css'
+					'font-awesome.min.css': 'font-awesome/css/font-awesome.min.css',
+					'jquery.dataTables.min.css': 'datatables/media/css/jquery.dataTables.min.css',
+					'dataTables.foundation.css': 'datatables-plugins/integration/foundation/dataTables.foundation.css',
+					'dataTables.fontAwesome.css': 'datatables-plugins/integration/font-awesome/dataTables.fontAwesome.css'
 				}
 			},
 
