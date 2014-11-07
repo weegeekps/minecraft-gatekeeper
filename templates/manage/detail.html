@@ -9,9 +9,70 @@
     </div>
     <div class="row">
         <div class="small-12 columns">
-            <form action="/" method="post">
+            <form>
                 {% csrf_token %}
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label>Username
+                            <input type="text" value="{{ user.username }}" disabled>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-6 columns">
+                        <label>First Name
+                            <input type="text" value="{{ user.first_name }}" disabled>
+                        </label>
+                    </div>
+                    <div class="small-6 columns">
+                        <label>Last Name
+                            <input type="text" value="{{ user.last_name }}" disabled>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label>Minecraft Username
+                            <input type="text" value="{{ user.minecraft_username }}" disabled>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label>Referred By
+                            <input type="text" value="{{ user.referred_by }}" disabled>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 columns">
+                        <div class="row collapse">
 
+                            <label>Suspended Until</label>
+
+                            <div class="small-10 columns">
+                                <input type="text" value="{% if user.suspended_until %}{{ user.suspended_until }}{% else %}Not Suspended{% endif %}" disabled>
+                            </div>
+                            <div class="small-2 columns">
+                                <a href="#" class="button postfix">Suspend</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label>Suspension Reason
+                            <input type="text" value="{% if user.suspended_until %}{{ user.suspended_reason }}{% else %}Not Suspended{% endif %}" disabled>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label>Reddit Username
+                            <input type="text" value="{{ user.reddit_username }}" disabled>
+                        </label>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
