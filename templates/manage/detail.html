@@ -32,9 +32,23 @@
                 </div>
                 <div class="row">
                     <div class="small-12 columns">
-                        <label>Minecraft Username
-                            <input type="text" value="{{ user.minecraft_username }}" disabled>
-                        </label>
+                        <div class="row collapse">
+                            <label>Minecraft Username</label>
+
+                            <div class="small-10 columns">
+                                <input type="text" value="{{ user.minecraft_username }}" disabled>
+                            </div>
+                            <div class="small-2 columns">
+                                {% if not user.granted_access %}
+                                    <a href="{% url 'grant-access' user.username %}" class="button postfix">Grant Access</a>
+                                {% else %}
+                                {% comment %}
+                                TODO: Put a popup letting the mod know this is permanent
+                                {% endcomment %}
+                                    <a href="{% url 'revoke-access' user.username %}" class="button postfix">Revoke Access</a>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">

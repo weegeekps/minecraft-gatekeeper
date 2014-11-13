@@ -92,3 +92,31 @@ class UnsuspendUserView(RedirectView):
         messages.success(self.request, 'User has been unsuspended.')
 
         return super(UnsuspendUserView, self).get_redirect_url(*args, **kwargs)
+
+class GrantAccessView(RedirectView):
+    permanent = False
+    pattern_name = 'manage-detail'
+
+    def get_redirect_url(self, *args, **kwargs):
+        user = auth.get_user_model().objects.get(username=self.kwargs['slug'])
+        user.granted_access = True
+        user.save()
+
+        # TODO: Send an email to the user letting them know they have access.
+
+        messages.success(self.request, 'User has been granted access.')
+
+        return super(GrantAccessView, self).get_redirect_url(*args, **kwargs)
+
+class RevokeAccessView(RedirectView):
+    permanent = False
+    pattern_name = 'manage-detail'
+
+    def get_redirect_url(self, *args, **kwargs):
+        user = auth.get_user_model().objects.get(username=self.kwargs['slug'])
+        user.granted_access = False
+        user.save()
+
+        messages.success(self.request, 'User access has been revoked.')
+
+        return super(RevokeAccessView, self).get_redirect_url(*args, **kwargs)
