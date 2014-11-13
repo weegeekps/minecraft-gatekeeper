@@ -9,8 +9,8 @@
     </div>
     <div class="row">
         <div class="small-12 columns">
-            <form>
-                {% csrf_token %}
+            {% include 'messages.html' %}
+            <form id="manage-user-form">
                 <div class="row">
                     <div class="small-12 columns">
                         <label>Username
@@ -54,7 +54,11 @@
                                 <input type="text" value="{% if user.suspended_until %}{{ user.suspended_until }}{% else %}Not Suspended{% endif %}" disabled>
                             </div>
                             <div class="small-2 columns">
-                                <a href="#" class="button postfix">Suspend</a>
+                                {% if not user.suspended_until %}
+                                    <a href="{% url 'suspend-user' user.username %}" class="button postfix">Suspend</a>
+                                {% else %}
+                                    <a href="{% url 'unsuspend-user' user.username %}" class="button postfix">Unsuspend</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

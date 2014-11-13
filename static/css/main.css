@@ -1,3 +1,5 @@
+/*# sourceMappingURL=main.css.map */
+
 .signin-button {
     background-color: #DD4B39;
 }
@@ -6,6 +8,15 @@
     height: 6em;
 }
 
-tr:hover {
+#user-list tr:hover {
     cursor: pointer;
+}
+
+#manage-user-form input[disabled] {
+    background-color: #F6F6F6;
+    cursor: not-allowed;
+}
+
+#manage-user-form label {
+    cursor: default;
 }

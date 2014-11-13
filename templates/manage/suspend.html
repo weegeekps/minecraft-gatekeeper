@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+    {% include "navigation.html" with active_tab="manage" %}
+    <div class="row">
+        <div class="small-12 columns">
+            <h1>Suspend User {{ user.username }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12">
+            {% include "messages.html" %}
+            <form id="suspend-user-form" action="{% url 'suspend-user' user.username %}" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label class="{% if form.suspended_reason.errors %}error{% endif %}">Reason
+                            <input type="text" name="{{ form.suspended_reason.html_name }}" placeholder="Please enter as many details as possible.">
+                        </label>
+                        {% for error in form.suspended_reason.errors %}
+                            <small class="error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 medium-3 columns">
+                        <label class="{% if form.suspended_until.errors %}error{% endif %}">Suspend Until
+                            <input type="date" name="{{ form.suspended_until.html_name }}">
+                        </label>
+                        {% for error in form.suspended_until.errors %}
+                            <small class="error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 columns">
+                        <button class="button" type="submit">Suspend User</button>
+                        <a class="button secondary" href="{% url 'manage-detail' user.username %}">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

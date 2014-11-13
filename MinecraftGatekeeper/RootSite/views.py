@@ -1,8 +1,10 @@
 from django.contrib import auth, messages
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.http import HttpResponse, JsonResponse, HttpResponseNotAllowed
 from django.shortcuts import redirect
 from django.contrib.auth import logout as auth_logout
-from django.views.generic import FormView, ListView, DetailView, UpdateView
-from MinecraftGatekeeper.RootSite.forms import ProfileForm, UserChangeForm
+from django.views.generic import FormView, ListView, DetailView, UpdateView, View, RedirectView
+from MinecraftGatekeeper.RootSite.forms import ProfileForm, UserChangeForm, SuspendUserForm
 
 
 def logout(request):
@@ -45,7 +47,48 @@ class ManageListView(ListView):
     model = auth.get_user_model()
 
 
-class ManageDetailView(UpdateView):
+class ManageDetailView(DetailView):
     template_name = 'manage/detail.html'
     model = auth.get_user_model()
     slug_field = 'username'
+
+
+class SuspendUserView(FormView):
+    template_name = 'manage/suspend.html'
+    form_class = SuspendUserForm
+
+    def get_initial(self):
+        user = auth.get_user_model().objects.get(username=self.kwargs['slug'])
+
+        return {
+            'suspended_reason': user.suspended_reason,
+            'suspended_until': user.suspended_until,
+        }
+
+    def form_valid(self, form):
+        user = auth.get_user_model().objects.get(username=self.kwargs['slug'])
+        user.suspended_reason = form.cleaned_data['suspended_reason']
+        user.suspended_until = form.cleaned_data['suspended_until']
+        user.save()
+
+        messages.success(self.request, 'User has been suspended successfully.')
+
+        return super(SuspendUserView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('manage-detail', kwargs={'slug': self.kwargs['slug']})
+
+
+class UnsuspendUserView(RedirectView):
+    permanent = False
+    pattern_name = 'manage-detail'
+
+    def get_redirect_url(self, *args, **kwargs):
+        user = auth.get_user_model().objects.get(username=self.kwargs['slug'])
+        user.suspended_reason = ''
+        user.suspended_until = None
+        user.save()
+
+        messages.success(self.request, 'User has been unsuspended.')
+
+        return super(UnsuspendUserView, self).get_redirect_url(*args, **kwargs)

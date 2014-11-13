@@ -7,7 +7,7 @@
     <div class="row">
         <div class="small-12 columns">
             <h1>Manage Server Access</h1>
-            <table id="userList" class="display" style="width: 100%">
+            <table id="user-list" class="display" style="width: 100%">
                 <thead>
                 <tr>
                     <th>Username</th>
@@ -19,7 +19,7 @@
                     <th>Suspended?</th>
                 </tr>
                 </thead>
-                <tbody id="userListBody">
+                <tbody id="user-list-body">
                 {% for user in object_list %}
                     <tr data-href="{% url 'manage-detail' user.username %}">
                         <td>{{ user.username }}</td>
@@ -61,14 +61,14 @@
 {% block extra_javascript %}
 <script type="application/javascript">
 $(document).ready(function() {
-    $('#userList').dataTable({
+    $('#user-list').dataTable({
         paging: false,
         searching: false
     });
 
-    $('#userListBody').on('click', 'tr', function () {
+    $('#user-list-body').on('click', 'tr', function () {
         window.location.href = $(this).attr('data-href');
-    })
+    });
 });
 </script>
 {% endblock %}

@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required, permission_required
-from MinecraftGatekeeper.RootSite.views import ProfileView, ManageListView, ManageDetailView
+from MinecraftGatekeeper.RootSite.views import ProfileView, ManageListView, ManageDetailView, UnsuspendUserView, SuspendUserView
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
@@ -16,6 +16,8 @@ urlpatterns = patterns('',
 
     url(r'^manage/$', permission_required('RootSite.change_user')(ManageListView.as_view()), name='manage-list'),
     url(r'^manage/(?P<slug>\w+)/$', permission_required('RootSite.change_user')(ManageDetailView.as_view()), name='manage-detail'),
+    url(r'^manage/(?P<slug>\w+)/suspend$', permission_required('RootSite.change_user')(SuspendUserView.as_view()), name='suspend-user'),
+    url(r'^manage/(?P<slug>\w+)/unsuspend$', permission_required('RootSite.change_user')(UnsuspendUserView.as_view()), name='unsuspend-user'),
 
     url(r'^$', login_required(ProfileView.as_view()), name='profile'),
 )

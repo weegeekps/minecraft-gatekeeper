@@ -16,3 +16,7 @@ class ProfileForm(forms.Form):
     referred_by = forms.CharField(max_length=120, required=False)
     reddit_username = forms.CharField(max_length=120, required=False)
 
+
+class SuspendUserForm(forms.Form):
+    suspended_reason = forms.CharField(max_length=140)
+    suspended_until = forms.DateTimeField()
